@@ -1,0 +1,140 @@
+<!-- <html>
+    <head>
+        <meta charset = "utf-8">
+        <title>用户管理</title>
+    </head>
+    <body>
+        用户管理
+    </body>
+</html> -->
+<html><head><meta charset="utf-8"><meta content="webkit" name="renderer"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="keywords" content="PoweredByJeeSiteV4.0"><meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta name="description" content="PoweredByJeeSiteV4.0"><meta content="no-cache" http-equiv="Pragma"><meta http-equiv="Expires" content="0"><meta content="width=device-width, initial-scale=1, user-scalable=1" name="viewport">
+    <title>机构管理 - JeeSite Demo</title>
+    <script src="https://hm.baidu.com/hm.js?104e825088869ff9c5855f24ab8204c2"></script><script src="global.min.js?ctx=/js/a"></script>
+    <script src="static/jquery/jquery-1.12.4.min.js"></script>
+    <script src="static/jquery/jquery-migrate-1.4.1.min.js"></script>
+    <!--[if lt IE 9]><script src="static/common/h5fix.min.js"></script><![endif]-->
+    <link rel="stylesheet" href="static/fonts/font-icons.min.css">
+    <link rel="stylesheet" href="static/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/select2/4.0/select2.css?V4.1-12222149">
+    <link rel="stylesheet" href="static/icheck/1.0/minimal/grey.css?V4.1-12222149">
+    <link rel="stylesheet" href="static/jqGrid/css/ui.jqgrid.css?V4.1-12222149">
+    <link rel="stylesheet" href="static/adminlte/css/AdminLTE.min.css?V4.1-12222149">
+    <link rel="stylesheet" href="static/common/jeesite.css?V4.1-12222149">
+    <link rel="stylesheet" href="static/common/common.css?V4.1-12222149">
+    <script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");
+    hm.src = "https://hm.baidu.com/hm.js?104e825088869ff9c5855f24ab8204c2";
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(hm, s);})();</script>
+    <link rel="stylesheet" href="static/layer/3.1/skin/default/layer.css?v=3.0.3303" id="layuicss-skinlayercss"><link href="static/my97/skin/WdatePicker.css" rel="stylesheet" type="text/css"></head><body class="hold-transition ">
+    <div class="wrapper"><div class="main-content">
+        <div class="box box-main">
+            <div class="box-header">
+                <div class="box-title">
+                    <i class="fa icon-grid"></i> 机构管理
+                </div>
+                <div class="box-tools pull-right">
+                    <a href="#" class="btn btn-default" id="btnSearch" title="查询"><i class="fa fa-filter"></i> 查询</a>
+                    <a href="#" class="btn btn-default" id="btnRefreshTree" title="刷新"><i class="fa fa-refresh"></i> 刷新</a>
+                    <a href="#" class="btn btn-default" id="btnExpandTreeNode" title="展开一级"><i class="fa fa-angle-double-down"></i> 展开</a>
+                    <a href="#" class="btn btn-default" id="btnCollapseTreeNode" title="折叠全部"><i class="fa fa-angle-double-up"></i> 折叠</a>
+                        <a href="a/sys/office/form" class="btn btn-default btnTool" title="新增机构" data-click-binded="true"><i class="fa fa-plus"></i> 新增</a>
+                </div>
+            </div>
+            <div class="box-body">
+    <form id="searchForm" action="a/sys/office/listData" method="post" class="form-inline hide" data-page-no="" data-page-size="" data-order-by="">
+    <input type="hidden" id="ctrlPermi" name="ctrlPermi" value="2">
+                    <div class="form-group">
+                        <label class="control-label">机构代码：</label>
+                        <div class="control-inline">
+    <input type="text" id="viewCode" name="viewCode" value="" maxlength="100" class="form-control width-120">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">机构名称：</label>
+                        <div class="control-inline">
+    <input type="text" id="officeName" name="officeName" value="" maxlength="100" class="form-control width-120">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">机构全称：</label>
+                        <div class="control-inline">
+    <input type="text" id="fullName" name="fullName" value="" maxlength="200" class="form-control width-120">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">机构类型：</label>
+                        <div class="control-inline width-90">
+    
+    <select id="officeType" name="officeType" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+    <option value="">&nbsp;</option><option value="1">省级公司</option><option value="2">市级公司</option></select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-officeType-container"><span class="select2-selection__rendered" id="select2-officeType-container" title="&nbsp;">&nbsp;</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>					</div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">状态：</label>
+                        <div class="control-inline width-60">
+    
+    <select id="status" name="status" class="form-control select2-hidden-accessible" tabindex="-1" aria-hidden="true">
+    <option value="">&nbsp;</option><option value="0">正常</option><option value="2">停用</option></select><span class="select2 select2-container select2-container--default" dir="ltr" style="width: 100%;"><span class="selection"><span class="select2-selection select2-selection--single" role="combobox" aria-haspopup="true" aria-expanded="false" tabindex="0" aria-labelledby="select2-status-container"><span class="select2-selection__rendered" id="select2-status-container" title="&nbsp;">&nbsp;</span><span class="select2-selection__arrow" role="presentation"><b role="presentation"></b></span></span></span><span class="dropdown-wrapper" aria-hidden="true"></span></span>					</div>
+                    </div>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-primary btn-sm">查询</button>
+                        <button type="reset" class="btn btn-default btn-sm">重置</button>
+                    </div>
+    <input id="pageNo" name="pageNo" type="hidden" value=""><input id="pageSize" name="pageSize" type="hidden" value=""><input id="orderBy" name="orderBy" type="hidden" value=""></form>
+                <div class="ui-jqgrid ui-widget ui-widget-content ui-corner-all" id="gbox_dataGrid" dir="ltr" style="width: 1125px;"><div class="ui-widget-overlay jqgrid-overlay" id="lui_dataGrid"></div><div class="ui-jqgrid-view" role="grid" id="gview_dataGrid" style="width: 1123px;"><div class="ui-jqgrid-titlebar ui-jqgrid-caption ui-widget-header ui-corner-top ui-helper-clearfix" style="display: none;"><a role="link" class="ui-jqgrid-titlebar-close ui-corner-all HeaderButton" title="Toggle Expand Collapse Grid" style="right: 0px;"><span class="ui-icon ui-icon-circle-triangle-n"></span></a><span class="ui-jqgrid-title"></span></div><div class="ui-state-default ui-jqgrid-hdiv ui-corner-top" style="width: 1123px;"><div class="ui-jqgrid-hbox"><table class="ui-jqgrid-htable" style="width: 1123px;" role="presentation" aria-labelledby="gbox_dataGrid" cellspacing="0" cellpadding="0" border="0"><thead><tr class="ui-jqgrid-labels" role="row"><th id="dataGrid_officeName" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr " style="width: 232px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_dataGrid_officeName" class="ui-jqgrid-sortable">机构名称<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_fullName" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 186px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_dataGrid_fullName" class="ui-jqgrid-sortable">机构全称<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_treeSort" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 74px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_dataGrid_treeSort" class="ui-jqgrid-sortable">排序号<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_officeType" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 93px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_dataGrid_officeType" class="ui-jqgrid-sortable">机构类型<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_updateDate" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr " style="width: 139px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_dataGrid_updateDate" class="ui-jqgrid-sortable">更新时间<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_remarks" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr" style="width: 186px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_dataGrid_remarks" class="ui-jqgrid-sortable">备注信息<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_status" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr " style="width: 74px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_dataGrid_status" class="ui-jqgrid-sortable">状态<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_actions" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr " style="width: 139px;"><span class="ui-jqgrid-resize ui-jqgrid-resize-ltr" style="cursor: col-resize;">&nbsp;</span><div id="jqgh_dataGrid_actions" class="ui-jqgrid-sortable">操作<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_treeLevel" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr " style="width: 1px; display: none;"><div id="jqgh_dataGrid_treeLevel" class="ui-jqgrid-sortable">treeLevel<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_parentCode" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr " style="width: 1px; display: none;"><div id="jqgh_dataGrid_parentCode" class="ui-jqgrid-sortable">parentCode<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_isTreeLeaf" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr " style="width: 1px; display: none;"><div id="jqgh_dataGrid_isTreeLeaf" class="ui-jqgrid-sortable">isTreeLeaf<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_isOpen" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr " style="width: 1px; display: none;"><div id="jqgh_dataGrid_isOpen" class="ui-jqgrid-sortable">isOpen<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_loaded" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr " style="width: 1px; display: none;"><div id="jqgh_dataGrid_loaded" class="ui-jqgrid-sortable">loaded<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid__icon" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr " style="width: 1px; display: none;"><div id="jqgh_dataGrid__icon" class="ui-jqgrid-sortable">_icon<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th><th id="dataGrid_otherData" role="columnheader" class="ui-state-default ui-th-column ui-th-ltr " style="width: 1px; display: none;"><div id="jqgh_dataGrid_otherData" class="ui-jqgrid-sortable">otherData<span class="s-ico" style="display:none"><span sort="asc" class="ui-grid-ico-sort ui-icon-asc ui-state-disabled ui-icon ui-icon-triangle-1-n ui-sort-ltr"></span><span sort="desc" class="ui-grid-ico-sort ui-icon-desc ui-state-disabled ui-icon ui-icon-triangle-1-s ui-sort-ltr"></span></span></div></th></tr></thead></table></div></div><div class="ui-jqgrid-bdiv" style="height: 200px; width: 1123px;"><table id="dataGrid" tabindex="0" cellspacing="0" cellpadding="0" border="0" role="presentation" aria-multiselectable="true" aria-labelledby="gbox_dataGrid" class="ui-jqgrid-btable" style="width: 1123px;"><tbody><tr class="jqgfirstrow" role="row" style="height:auto"><td role="gridcell" style="height: 0px; width: 232px;"></td><td role="gridcell" style="height: 0px; width: 186px;"></td><td role="gridcell" style="height: 0px; width: 74px;"></td><td role="gridcell" style="height: 0px; width: 93px;"></td><td role="gridcell" style="height: 0px; width: 139px;"></td><td role="gridcell" style="height: 0px; width: 186px;"></td><td role="gridcell" style="height: 0px; width: 74px;"></td><td role="gridcell" style="height: 0px; width: 139px;"></td><td role="gridcell" style="height:0px;width:1px;display:none;"></td><td role="gridcell" style="height:0px;width:1px;display:none;"></td><td role="gridcell" style="height:0px;width:1px;display:none;"></td><td role="gridcell" style="height:0px;width:1px;display:none;"></td><td role="gridcell" style="height:0px;width:1px;display:none;"></td><td role="gridcell" style="height:0px;width:1px;display:none;"></td><td role="gridcell" style="height:0px;width:1px;display:none;"></td></tr><tr role="row" id="SD" tabindex="-1" class="ui-widget-content jqgrow ui-row-ltr"><td role="gridcell" style="text-align:left;" title="( SD ) 山东公司" aria-describedby="dataGrid_officeName"><div class="tree-wrap tree-wrap-ltr" style="width:18px;"><div style="left:0px;" class="ui-icon ui-icon-triangle-1-e tree-plus treeclick"></div></div><span class="cell-wrapper" style="cursor: pointer;">( SD ) <a href="a/sys/office/form?officeCode=SD" class="btnList" data-title="编辑机构" data-click-binded="true">山东公司</a></span></td><td role="gridcell" style="text-align:left;" title="山东公司" aria-describedby="dataGrid_fullName">山东公司</td><td role="gridcell" style="text-align:center;" title="40" aria-describedby="dataGrid_treeSort">40</td><td role="gridcell" style="text-align:center;" title="省级公司" aria-describedby="dataGrid_officeType">省级公司</td><td role="gridcell" style="text-align:center;" title="2018-04-02 09:16" aria-describedby="dataGrid_updateDate">2018-04-02 09:16</td><td role="gridcell" style="text-align:left;" title="&nbsp;" aria-describedby="dataGrid_remarks">&nbsp;</td><td role="gridcell" style="text-align:center;" title="正常" aria-describedby="dataGrid_status">正常</td><td role="gridcell" style="" class="actions " aria-describedby="dataGrid_actions"><a href="a/sys/office/form?officeCode=SD" class="btnList" title="编辑机构" data-click-binded="true"><i class="fa fa-pencil"></i></a>&nbsp;<a href="a/sys/office/disable?officeCode=SD" class="btnList" title="停用机构" data-confirm="确认要停用该机构吗？" data-click-binded="true"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;<a href="a/sys/office/delete?officeCode=SD" class="btnList" title="删除机构" data-confirm="确认要删除该机构及所有子机构吗？" data-deltreenode="SD" data-click-binded="true"><i class="fa fa-trash-o"></i></a>&nbsp;<a href="a/sys/office/form?parentCode=SD" class="btnList" title="新增下级机构" data-click-binded="true"><i class="fa fa-plus-square"></i></a>&nbsp;</td><td role="gridcell" style="display:none;" title="0" aria-describedby="dataGrid_treeLevel">0</td><td role="gridcell" style="display:none;" title="0" aria-describedby="dataGrid_parentCode">0</td><td role="gridcell" style="display:none;" title="false" aria-describedby="dataGrid_isTreeLeaf">false</td><td role="gridcell" style="display:none;" title="&nbsp;" aria-describedby="dataGrid_isOpen">&nbsp;</td><td role="gridcell" style="display:none;" title="&nbsp;" aria-describedby="dataGrid_loaded">&nbsp;</td><td role="gridcell" style="display:none;" title="&nbsp;" aria-describedby="dataGrid__icon">&nbsp;</td><td role="gridcell" style="display:none;" title="&nbsp;" aria-describedby="dataGrid_otherData">&nbsp;</td></tr></tbody></table></div></div><div class="ui-jqgrid-resize-mark" id="rs_mdataGrid">&nbsp;</div></div>
+            </div>
+        </div>
+    </div>
+    </div>
+    
+    <a id="scroll-up" href="#" class="btn btn-sm"><i class="fa fa-angle-double-up"></i></a>
+    <script src="static/bootstrap/js/bootstrap.min.js"></script>
+    <script src="static/select2/4.0/select2.js?V4.1-12222149"></script>
+    <script src="static/select2/4.0/i18n/zh_CN.js?V4.1-12222149"></script>
+    <script src="static/layer/3.1/layer.js?V4.1-12222149"></script>
+    <script src="static/my97/WdatePicker.js?V4.1-12222149"></script>
+    <!-- <script src="static/jqGrid/js/jquery.jqGrid.js"></script> -->
+    <script src="static/jqGrid/js/jquery.jqGrid.extend.js"></script>   
+    <script src="static/jqGrid/js/i18n/zh_CN.js?V4.1-12222149"></script> 
+    <script src="static/common/jeesite.js?V4.1-12222149"></script>
+    <script src="static/common/i18n/jeesite_zh_CN.js?V4.1-12222149"></script>
+    <script src="static/common/common.js?V4.1-12222149"></script>
+    <script>
+    // 初始化DataGrid对象
+    $('#dataGrid').dataGrid({
+        searchForm: $("#searchForm"),
+        columnModel: [
+            {header:'机构名称', name:'officeName', index:'a.office_name', width:250, align:"left", frozen:true, formatter: function(val, obj, row, act){
+                return '( '+row.viewCode+' ) '+'<a href="a/sys/office/form?officeCode='+row.officeCode+'" class="btnList" data-title="编辑机构">'+(val||row.id)+'</a>';
+            }},
+            {header:'机构全称', name:'fullName', index:'a.full_name', width:200, align:"left"},
+            {header:'排序号', name:'treeSort', index:'a.tree_sort', width:80, align:"center"},
+            {header:'机构类型', name:'officeType', index:'a.office_type', width:100, align:"center", formatter: function(val, obj, row, act){
+                return js.getDictLabel([{"cssStyle":"","dictValue":"1","cssClass":"","dictLabel":"省级公司"},{"cssStyle":"","dictValue":"2","cssClass":"","dictLabel":"市级公司"}], val, '未知', true);
+            }},
+            {header:'更新时间', name:'updateDate', index:'a.update_date', width:150, align:"center"},
+            {header:'备注信息', name:'remarks', index:'a.remarks', width:200, align:"left"},
+            {header:'状态', name:'status', index:'a.status', width:80, align:"center", formatter: function(val, obj, row, act){
+                return js.getDictLabel([{"cssStyle":"","dictValue":"0","cssClass":"","dictLabel":"正常"},{"cssStyle":"color:#f00;","dictValue":"1","cssClass":"","dictLabel":"删除"},{"cssStyle":"color:#f00;","dictValue":"2","cssClass":"","dictLabel":"停用"},{"cssStyle":"color:#fa0;","dictValue":"3","cssClass":"","dictLabel":"冻结"},{"cssStyle":"","dictValue":"4","cssClass":"","dictLabel":"待审"},{"cssStyle":"","dictValue":"5","cssClass":"","dictLabel":"驳回"},{"cssStyle":"color:#aaa;","dictValue":"9","cssClass":"","dictLabel":"草稿"}], val, '未知', true);
+            }},
+            {header:'操作', name:'actions', width:150, sortable:false, title:false, formatter: function(val, obj, row, act){
+                var actions = [];
+                    actions.push('<a href="a/sys/office/form?officeCode='+row.officeCode+'" class="btnList" title="编辑机构"><i class="fa fa-pencil"></i></a>&nbsp;');
+                    if (row.status == Global.STATUS_NORMAL){
+                        actions.push('<a href="a/sys/office/disable?officeCode='+row.officeCode+'" class="btnList" title="停用机构" data-confirm="确认要停用该机构吗？"><i class="glyphicon glyphicon-ban-circle"></i></a>&nbsp;');
+                    }
+                    if (row.status == Global.STATUS_DISABLE){
+                        actions.push('<a href="a/sys/office/enable?officeCode='+row.officeCode+'" class="btnList" title="启用机构" data-confirm="确认要启用该机构吗？"><i class="glyphicon glyphicon-ok-circle"></i></a>&nbsp;');
+                    }
+                    actions.push('<a href="a/sys/office/delete?officeCode='+row.officeCode+'" class="btnList" title="删除机构" data-confirm="确认要删除该机构及所有子机构吗？" data-deltreenode="'+row.id+'"><i class="fa fa-trash-o"></i></a>&nbsp;');
+                    actions.push('<a href="a/sys/office/form?parentCode='+row.id+'" class="btnList" title="新增下级机构"><i class="fa fa-plus-square"></i></a>&nbsp;');
+                return actions.join('');
+            }}
+        ],
+        treeGrid: true,			// 启用树结构表格
+        defaultExpandLevel: 0,	// 默认展开的层次
+        expandNodeClearPostData: 'viewCode,officeName,fullName,officeType,', // 展开节点清理请求参数数据（一般设置查询条件的字段属性，否则在查询后，不能展开子节点数据）	// 加载成功后执行事件
+        ajaxSuccess: function(data){
+            
+        }
+    });
+    </script></body></html>

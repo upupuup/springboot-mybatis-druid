@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta content="webkit" name="renderer" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="keywords" content="PoweredByJeeSiteV4.0" />
+		<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+		<meta name="description" content="PoweredByJeeSiteV4.0" />
+		<meta content="no-cache" http-equiv="Pragma" />
+		<meta http-equiv="Expires" content="0" />
+		<meta content="width=device-width, initial-scale=1, user-scalable=1" name="viewport" />
+		<title>岗位管理 - JeeSite Demo</title>
+		<script src="../hm/hm.js"></script>
+		<script src="../global/global.min.js"></script>
+		<!-- <script src="./jquery-1.12.4.min.js.下载"></script>
+		<script src="./jquery-migrate-1.4.1.min.js.下载"></script> -->
+		<script src="../jquery/jquery-1.12.4.min.js"></script>
+		<script src="../jquery/jquery-migrate-1.4.1.min.js"></script>
+		<!--[if lt IE 9]>
+			<script src="/js/static/common/h5fix.min.js"></script>
+		<![endif]-->
+		<link rel="stylesheet" href="../fonts/font-icons.min.css" />
+		<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../select2/4.0/select2.css?V4.1-12222149" />
+		<link rel="stylesheet" href="../icheck/1.0/minimal/grey.css?V4.1-12222149" />
+		<link rel="stylesheet" href="../jqGrid/css/ui.jqgrid.css?V4.1-12222149" />
+		<link rel="stylesheet" href="../wdScrollTab/css/TabPanel.css?V4.1-12222149" />
+		<link rel="stylesheet" href="../adminlte/css/AdminLTE.min.css?V4.1-12222149" />
+		<link rel="stylesheet" href="../common/jeesite.css?V4.1-12222149" />
+		<link rel="stylesheet" href="../common/common.css?V4.1-12222149" />
+		<script>var _hmt = _hmt || []; (function() {
+				var hm = document.createElement("script");
+				hm.src = "../hm/hm.js";
+				var s = document.getElementsByTagName("script")[0];
+				s.parentNode.insertBefore(hm, s);
+			})();</script>
+		<link rel="stylesheet" href="../layer/3.1/skin/default/layer.css" type="text/css" />
+		<link href="../my97/skin/WdatePicker.css" rel="stylesheet" type="text/css" /></head>
+	<body class="hold-transition ">
+		<div class="wrapper">
+			<div class="main-content">
+				<div class="box box-main">
+					<div class="box-header">
+						<div class="box-title">
+							<i class="fa icon-trophy"></i>编辑岗位</div>
+						<div class="box-tools pull-right">
+							<button type="button" class="btn btn-box-tool" data-widget="collapse" style="cursor: pointer;">
+								<i class="fa fa-minus"></i>
+							</button>
+						</div>
+					</div>
+					<form id="inputForm" action="/dept/update" method="post" class="form-horizontal" novalidate="novalidate">
+						<div class="box-body">
+							<div class="form-unit">基本信息</div>
+							<div class="row">
+								<div class="col-xs-6">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required " aria-required="true">*</span>部门名称：
+											<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<input type="hidden" id="id" name="id" th:value = "${dept.id}" />
+											<input type="text" id="postName" name="departName" th:value = "${dept.departName}" maxlength="100" class="form-control required" remote="/js/a/sys/post/checkPostName?oldPostName=人力经理" data-msg-remote="部门名称已存在" aria-required="true" aria-invalid="false" /></div>
+									</div>
+								</div>
+								<div class="col-xs-6">
+									<div class="form-group">
+										<label class="control-label col-sm-4" title="">
+											<span class="required " aria-required="true">*</span>部门编号：
+											<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-8">
+											<input type="hidden" id="isNewRecord" name="isNewRecord" value="false" />
+											<input type="text" id="postCode" name="deptNo" th:value = "${dept.deptNo}" maxlength="64" readonly="true" class="form-control required abc" aria-required="true" /></div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-xs-12">
+									<div class="form-group">
+										<label class="control-label col-sm-2" title="">
+											<span class="required hide" aria-required="true">*</span>备注信息：
+											<i class="fa icon-question hide"></i></label>
+										<div class="col-sm-10">
+											<textarea id="remarks" name="remarks" rows="4" maxlength="500" class="form-control "></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="box-footer">
+							<div class="row">
+								<div class="col-sm-offset-2 col-sm-10">
+									<button type="submit" class="btn btn-sm btn-primary" id="btnSubmit">
+										<i class="fa fa-check"></i>保 存</button>&nbsp;
+									<button type="button" class="btn btn-sm btn-default" id="btnCancel" onclick="js.closeCurrentTabPage()">
+										<i class="fa fa-reply-all"></i>关 闭</button>
+									<div class="form-error" style="display: none;">您填写的信息有误，请根据提示修正。</div></div>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<a id="scroll-up" href="http://demo.jeesite.com/js/a/sys/post/form?postCode=hrm#" class="btn btn-sm">
+			<i class="fa fa-angle-double-up"></i>
+		</a>
+		<script src="../bootstrap/js/bootstrap.min.js"></script>
+		<script src="../select2/4.0/select2.js"></script>
+		<script src="../select2/4.0/i18n/zh_CN.js"></script>
+		<script src="../layer/3.1/layer.js"></script>
+		<script src="../my97/WdatePicker.js"></script>
+		<script src="../jqGrid/js/jquery.jqGrid.js"></script>
+		<script src="../common/jeesite.js"></script>
+		<script src="../common/i18n/jeesite_zh_CN.js"></script>
+		<script src="../common/common.js"></script>
+		<script src="../select2/4.0/i18n/zh_CN.js?V4.1-12222149"></script>
+		<script src="../jqGrid/js/i18n/zh_CN.js?V4.1-12222149"></script>
+		<script>
+			/* $("#inputForm").validate({
+				submitHandler: function(form) {
+					js.ajaxSubmitForm($(form),
+					function(data) {
+						js.showMessage(data.message);
+						if (data.result == Global.TRUE) {
+							js.closeCurrentTabPage(function(contentWindow) {
+								contentWindow.page();
+							});
+						}
+					},
+					"json");
+				}
+			}); */
+		</script>
+	</body>
+
+</html>

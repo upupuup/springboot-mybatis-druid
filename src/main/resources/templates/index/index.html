@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><meta charset="utf-8"><meta content="webkit" name="renderer"/><meta http-equiv="X-UA-Compatible"
+content="IE=edge"><meta name="keywords" content="PoweredByJeeSiteV4.0"/><meta http-equiv="Cache-Control"
+content="no-cache, no-store, must-revalidate"/><meta name="description" content="PoweredByJeeSiteV4.0"/><meta
+content="no-cache" http-equiv="Pragma"/><meta http-equiv="Expires" content="0"/><meta
+content="width=device-width, initial-scale=1, user-scalable=1" name="viewport"/>
+<title>JeeSite Demo</title>
+<script src="../global/global.min.js"></script>
+<script src="../jquery/jquery-1.12.4.min.js"></script>
+<script src="../jquery/jquery-migrate-1.4.1.min.js"></script>
+<!--[if lt IE 9]><script src="../common/h5fix.min.js"></script><![endif]-->
+<link rel="stylesheet" href="../fonts/font-icons.min.css">
+<link rel="stylesheet" href="../bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../select2/4.0/select2.css?V4.1-12222149">
+<link rel="stylesheet" href="../icheck/1.0/minimal/grey.css?V4.1-12222149">
+<link rel="stylesheet" href="../wdScrollTab/css/TabPanel.css?V4.1-12222149">
+<link rel="stylesheet" href="../adminlte/css/AdminLTE.min.css?V4.1-12222149">
+<link rel="stylesheet" href="../common/jeesite.css?V4.1-12222149">
+<link rel="stylesheet" href="../common/common.css?V4.1-12222149">
+<script>var _hmt = _hmt || [];(function() {var hm = document.createElement("script");
+hm.src = "https://hm.baidu.com/hm.js?104e825088869ff9c5855f24ab8204c2";
+var s = document.getElementsByTagName("script")[0];
+s.parentNode.insertBefore(hm, s);})();</script>
+</head><body class="hold-transition fixed noscroll2 sidebar-mini ">
+<div class="wrapper"><!--[if lte IE 9]><a style="position:absolute;top:0;left:0;z-index:100000;display:block;width:100%;font-size:14px;color:#F00;text-decoration:none;background-color:#faffb3;text-align:center;"
+href="../upbw/index.html" target="_blank">您的浏览器版本过低或在兼容模式下，导致打开速度过慢，提升速度您可以切换到极速模式或升级为最新版，点击此处查看详情。</a><![endif]-->
+<!--[if lte IE 8]><script>window.location.href='static/upbw/index.html?url='+location.href;</script><![endif]-->
+<link rel="stylesheet" href="../jquery-toastr/2.0/toastr.min.css?V4.1-12222149">
+<link rel="stylesheet" href="../adminlte/css/skins/skin-blue-light.css?V4.1-12222149">
+<link rel="stylesheet" href="../modules/sys/sysIndex.css?V4.1-12222149">
+<header class="main-header">
+<nav class="navbar navbar-static-top">
+	<div class="logo" data-toggle="push-menu">
+		<b>JeeSite Demo</b>
+		<small>&nbsp; &nbsp;<i class="fa fa-bars"></i></small>
+	</div>
+	<div class="navbar-custom-menu">
+		<ul class="nav navbar-nav">
+<li>
+	<a href="javascript:" id="switchCorp">
+		<i class="fa icon-home"></i> 当前租户：(0) JeeSite
+	</a>
+	<div class="hide"><div class="input-group treeselect" id="switchCorpSelectDiv" data-url="a/sys/corpAdmin/treeData?isShowCode=true">
+	<input id="switchCorpSelectName" type="text" name="" value=""
+		class="form-control  " readonly="readonly"
+	/><input id="switchCorpSelectCode" type="hidden" name="" value="" class="isReset"
+	/><span class="input-group-btn"><a id="switchCorpSelectButton" href="javascript:"
+		class="btn btn-default "><i class="fa fa-search"></i></a>
+	</span>
+</div>
+<script>
+$("#switchCorpSelectButton,#switchCorpSelectName").click(function(){
+	if ($("#switchCorpSelectButton").hasClass("disabled")){
+		return true;
+	}
+	var options = {
+		type: 2,
+		maxmin: true,
+		shadeClose: true,
+		title: '租户切换',
+		area: ['300px', '400px'],
+		content: 'tags/treeselect',
+		contentFormData: {
+			url: $('#switchCorpSelectDiv').attr('data-url'),
+			checkbox: 'false',
+			expandLevel: '-1',
+			selectCodes: $("#switchCorpSelectCode").val(),
+			isReturnValue: 'false'
+		},
+		success: function(layero, index){
+			if ($(js.layer.window).width() < 300
+				|| $(js.layer.window).height() < 400){
+				js.layer.full(index);
+			}
+		},
+		btn: ['<i class="fa fa-check"></i> 确定'],
+		btn1: function(index, layero){
+			var win = js.layer.iframeWindow(index);
+			win.$('#keyword').val('').change(); 			var codes = [], names = [], nodes;
+			if ("false" == "true"){
+				nodes = win.tree.getCheckedNodes(true);
+			}else{
+				nodes = win.tree.getSelectedNodes();
+			}
+			for(var i=0; i<nodes.length; i++) {
+				if (nodes[i].level == 0 && nodes[i].isParent){
+					js.showMessage("不能选择根节点（"+nodes[i].name+"）请重新选择。");
+					return false;
+				}
+				if (nodes[i].isParent){
+					js.showMessage("不能选择父节点（"+nodes[i].name+"）请重新选择。");
+					return false;
+				}
+				var code = nodes[i]['false'=='true'?'value':'id'], name = nodes[i]['name'];
+				codes.push(code.replace(/^u_/g,''));
+				names.push(name.replace(/\([0-9]*\)/g,''));
+				break;
+			}
+			if(typeof treeselectCheck == 'function'){
+				if (!treeselectCheck('switchCorpSelect', nodes)){
+					return false;
+				}
+			}
+			$("#switchCorpSelectCode").val(codes.join(',')).change();
+			$("#switchCorpSelectName").val(names.join(',')).change();
+			try { $('#switchCorpSelectCode,#switchCorpSelectName').valid(); }catch(e){}
+			if(typeof switchCorpSelectCallback == 'function'){
+				switchCorpSelectCallback('switchCorpSelect', 'ok', index, layero, nodes);
+			}
+		}
+	};
+	options.btn.push('<i class="fa fa-close"></i> 关闭');
+	options['btn'+options.btn.length] = function(index, layero){
+		if(typeof switchCorpSelectCallback == 'function'){
+			switchCorpSelectCallback('switchCorpSelect', 'cancel', index, layero);
+		}
+	};
+	js.layer.open(options);
+});
+</script>	</div>
+	<script>
+		$('#switchCorp').click(function(){
+			$('#switchCorpSelectButton').click();
+		});
+		function switchCorpSelectCallback(id, act, index, layero, nodes){
+			if (act == 'ok'){
+				var corpCode = $('#switchCorpSelectCode').val();
+				if (corpCode != ''){
+					js.ajaxSubmit("a/sys/corpAdmin/switch/"+corpCode, function(data){
+						js.showMessage(data.message);
+						top.location.reload();
+					});
+				}
+			}
+		}
+	</script>
+</li>
+			<li><a href="javascript:" id="fullScreen" title="全屏"><i class="fa fa-arrows-alt"></i></a></li>
+			<li><a href="javascript:" id="switchSkin" title="切换主题" style="margin-top:-1px;"><i class="fa fa-dashboard"></i></a></li>
+<li class="dropdown user-menu mr5">
+	<a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+		<i class="fa icon-globe"></i>
+	</a>
+	<ul class="dropdown-menu">
+		<li class="mt5"></li>
+			<li><a href="lang/zh_CN">简体中文</a></li>
+			<li><a href="lang/en">英语</a></li>
+		<li class="mt10"></li>
+	</ul>
+</li>
+<li>
+	<a href="javascript:" data-href="a/sys/online/list" data-title="在线人员" title="在线人员"
+		class="addTabPage">
+		<i class="icon-people"></i><span id="onlineCount" class="label label-success">0</span>
+	</a>
+	<script>
+		/* function refreshOnlineCount(){
+			$.get('a/sys/online/count?__notUpdateSession=true&__t='
+					+ new Date().getTime(), function(data){
+				try{$('#onlineCount').html(Number(data))}catch(e){}
+			})
+		}
+		refreshOnlineCount(); // 先执行一次
+		setInterval(refreshOnlineCount, 180000); // 3分钟执行一次 */
+	</script>
+</li><li class="dropdown messages-menu">
+	<a href="javascript:" class="dropdown-toggle" data-hover="dropdown">
+		<i class="fa fa-envelope-o"></i>
+		<span class="label label-success" id="msgNum">0</span>
+	</a>
+	<ul class="dropdown-menu">
+		<li class="header">你有 <span id="msgNum2">0</span> 条消息</li>
+		<li>
+			<ul class="menu" id="msgList"
+				data-mergeMsgLimit="5"
+				data-mergeMsgTitle="系统消息"
+				data-mergeMsgContent="您有 {0} 条新消息，由于消息太多，这里为您合并，请点击查看按钮看详情。"></ul>
+		</li>
+		<li class="footer"><a href="javascript:" data-href="a/msg/list"
+			data-title="查看全部消息" class="addTabPage">查看全部消息</a></li>
+	</ul>
+	<script src="../jquery-timeago/jquery.timeago.js"></script>
+	<script src="../jquery-timeago/i18n/jquery.timeago.zh_CN.js"></script>
+	<script src="../modules/msg/topMenuMsg.js"></script>
+	<script type="text/template" id="msgListTpl">
+		<li id="msg{{d.id}}"><a href="javascript:"
+				data-href="a/msg/readMsg?id={{d.id}}"
+				onclick="readMsg(this, '查看消息', '{{d.id}}')" >
+			<div class="pull-left"><i class="img-circle bg-aqua icon-bubble"></i></div>
+			<h4>{{d.msgContentEntity.title}} <small><i class="fa fa-clock-o"></i>
+				<abbr class="timeago" title="{{d.sendDate}}">{{d.sendDate}}</abbr></small></h4>
+			<p>{{=d.msgContentEntity.content}}</p>
+		</a></li>
+	</script>
+	<script type="text/template" id="msgTipTpl">
+		<abbr class="timeago" title="{{d.sendDate}}">{{d.sendDate}}</abbr>
+			{{d.sendUserName}} <br/> {{=d.msgContentEntity.content}} 
+		<div style="margin:8px 0 0;float:right;">
+			{{# $.each(d.msgContentEntity.buttons, function(idx, item){ }}
+				<button class="btn btn-default btn-sm" type="button"
+					data-href="/js{{item.href}}"
+					onclick="readMsg(this, '查看消息', '{{item.id}}');">{{item.name}}</button>&nbsp;
+			{{# }); }}
+			<button type="button" class="btn btn-default btn-sm"
+				data-href="a/msg/readMsg?id={{d.id}}"
+				onclick="readMsg(this, '消息详情', '{{d.id}}')">查看</button>&nbsp;
+		</div>
+	</script>
+</li>
+<li class="dropdown user-menu mr5">
+	<a href="javascript:" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown">
+		<img src="userfiles/avatar/system.png" class="user-image">
+		<span class="hidden-xs">jeesite</span>
+	</a>
+	<ul class="dropdown-menu">
+		<li class="mt5">
+			<a id="userInfo" href="javascript:" data-href="a/sys/user/info" class="addTabPage">
+			<i class="fa fa-user"></i> 个人中心</a>
+		</li>
+		<li>
+			<a id="modifyPassword" href="javascript:" data-href="a/sys/user/info?op=pwd" class="addTabPage">
+			<i class="fa fa-key"></i> 修改密码</a>
+		</li>
+		<li class="divider"></li>
+		<li>
+			<a href="a/logout">
+			<i class="fa fa-sign-out"></i> 退出登录</a>
+		</li>
+			<li class="divider"></li>
+			<li class="dropdown-header mb5">系统切换：</li>
+				<li>
+					<a href="js/a/switch/default">
+						<i class="fa fa-check-circle-o"></i> 主导航菜单
+					</a>
+				</li>
+				<li>
+					<a href="js/a/switch/test1">
+						<i class="fa fa-circle-o"></i> 测试系统1
+					</a>
+				</li>
+				<li>
+					<a href="js/a/switch/test2">
+						<i class="fa fa-circle-o"></i> 测试系统2
+					</a>
+				</li>
+			<li class="mt10"></li>
+	</ul>
+</li>		</ul>
+	</div>
+</nav></header>
+<aside class="main-sidebar">
+<section class="sidebar">
+	<div class="user-panel">
+		<div class="pull-left image">
+			<img data-href="a/sys/user/info" data-title="个人中心" class="addTabPage img-circle"
+				src="userfiles/avatar/system.png">
+		</div>
+		<div class="pull-left info">
+			<p>jeesite</p>
+			<a href="javascript:"><i class="fa fa-circle text-success"></i> 在线</a>
+			<a href="a/logout"><i class="fa fa-sign-out text-danger"></i> 注销</a>
+		</div>
+	</div>
+	<ul class="sidebar-menu" data-widget="tree">
+<li class="treeview"><a title="系统管理" href="javascript:" data-href="blank" class="addTabPage"><i class="fa fa-fw icon-settings"></i> <span>系统管理</span>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">
+<li class="treeview"><a title="组织管理" href="javascript:" data-href="blank" class="addTabPage"><i class="fa fa-fw icon-grid"></i> <span>组织管理</span>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">
+<li class="treeview"><a title="用户管理" href="javascript:" data-href="a/sys/empUser/index" class="addTabPage"><i class="fa fa-fw icon-user"></i> <span>用户管理</span></a></li>
+<li class="treeview"><a title="机构管理" href="javascript:" data-href="xxxxxxxxx" class="addTabPage"><i class="fa fa-fw icon-grid"></i> <span>机构管理</span></a></li>
+<!-- <li class="treeview"><a title="机构管理" href="javascript:" data-href="a/sys/office/list" class="addTabPage"><i class="fa fa-fw icon-grid"></i> <span>机构管理</span></a></li> -->
+<li class="treeview"><a title="公司管理" href="javascript:" data-href="a/sys/company/list" class="addTabPage"><i class="fa fa-fw icon-fire"></i> <span>公司管理</span></a></li>
+<!-- <li class="treeview"><a title="部门管理" href="javascript:" data-href="a/sys/post/list" class="addTabPage"><i class="fa fa-fw icon-trophy"></i> <span>部门管理</span></a></li> -->
+<li class="treeview"><a title="部门管理" href="javascript:" data-href="dept/queryList" class="addTabPage"><i class="fa fa-fw icon-trophy"></i> <span>部门管理</span></a></li>
+</ul></li>
+<li class="treeview"><a title="权限管理" href="javascript:" data-href="blank" class="addTabPage"><i class="fa fa-fw icon-social-dropbox"></i> <span>权限管理</span>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">
+<li class="treeview"><a title="角色管理" href="javascript:" data-href="a/sys/role/list" class="addTabPage"><i class="fa fa-fw icon-people"></i> <span>角色管理</span></a></li>
+<li class="treeview"><a title="二级管理员" href="javascript:" data-href="a/sys/secAdmin/list" class="addTabPage"><i class="fa fa-fw icon-user-female"></i> <span>二级管理员</span></a></li>
+<li class="treeview"><a title="系统管理员" href="javascript:" data-href="a/sys/corpAdmin/list" class="addTabPage"><i class="fa fa-fw icon-badge"></i> <span>系统管理员</span></a></li>
+</ul></li>
+<li class="treeview"><a title="系统设置" href="javascript:" data-href="blank" class="addTabPage"><i class="fa fa-fw icon-settings"></i> <span>系统设置</span>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">
+<li class="treeview"><a title="菜单管理" href="javascript:" data-href="a/sys/menu/list" class="addTabPage"><i class="fa fa-fw icon-book-open"></i> <span>菜单管理</span></a></li>
+<li class="treeview"><a title="模块管理" href="javascript:" data-href="a/sys/module/list" class="addTabPage"><i class="fa fa-fw icon-grid"></i> <span>模块管理</span></a></li>
+<li class="treeview"><a title="参数设置" href="javascript:" data-href="a/sys/config/list" class="addTabPage"><i class="fa fa-fw icon-wrench"></i> <span>参数设置</span></a></li>
+<li class="treeview"><a title="字典管理" href="javascript:" data-href="a/sys/dictType/list" class="addTabPage"><i class="fa fa-fw icon-social-dropbox"></i> <span>字典管理</span></a></li>
+<li class="treeview"><a title="行政区划" href="javascript:" data-href="a/sys/area/list" class="addTabPage"><i class="fa fa-fw icon-map"></i> <span>行政区划</span></a></li>
+<li class="treeview"><a title="国际化管理" href="javascript:" data-href="a/sys/lang/list" class="addTabPage"><i class="fa fa-fw icon-globe"></i> <span>国际化管理</span></a></li>
+<li class="treeview"><a title="产品许可信息" href="javascript:" data-href="licence" class="addTabPage"><i class="fa fa-fw icon-paper-plane"></i> <span>产品许可信息</span></a></li>
+</ul></li>
+<li class="treeview"><a title="系统监控" href="javascript:" data-href="blank" class="addTabPage"><i class="fa fa-fw icon-ghost"></i> <span>系统监控</span>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">
+<li class="treeview"><a title="访问日志" href="javascript:" data-href="a/sys/log/list" class="addTabPage"><i class="fa fa-fw fa fa-bug"></i> <span>访问日志</span></a></li>
+<li class="treeview"><a title="数据监控" href="javascript:" data-href="druid" class="addTabPage"><i class="fa fa-fw icon-disc"></i> <span>数据监控</span></a></li>
+<li class="treeview"><a title="缓存监控" href="javascript:" data-href="a/state/cache/index" class="addTabPage"><i class="fa fa-fw icon-social-dribbble"></i> <span>缓存监控</span></a></li>
+<li class="treeview"><a title="服务器监控" href="javascript:" data-href="a/state/server/index" class="addTabPage"><i class="fa fa-fw icon-speedometer"></i> <span>服务器监控</span></a></li>
+<li class="treeview"><a title="作业监控" href="javascript:" data-href="a/job/list" class="addTabPage"><i class="fa fa-fw icon-notebook"></i> <span>作业监控</span></a></li>
+<li class="treeview"><a title="在线用户" href="javascript:" data-href="a/sys/online/list" class="addTabPage"><i class="fa fa-fw icon-social-twitter"></i> <span>在线用户</span></a></li>
+<li class="treeview"><a title="在线文档" href="javascript:" data-href="swagger-ui.html" class="addTabPage"><i class="fa fa-fw icon-book-open"></i> <span>在线文档</span></a></li>
+</ul></li>
+<li class="treeview"><a title="消息推送" href="javascript:" data-href="blank" class="addTabPage"><i class="fa fa-fw icon-envelope-letter"></i> <span>消息推送</span>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">
+<li class="treeview"><a title="未完成消息" href="javascript:" data-href="a/msg/msgPush/list" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>未完成消息</span></a></li>
+<li class="treeview"><a title="已完成消息" href="javascript:" data-href="a/msg/msgPush/list?pushed=true" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>已完成消息</span></a></li>
+<li class="treeview"><a title="消息模板管理" href="javascript:" data-href="a/msg/msgTemplate/list" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>消息模板管理</span></a></li>
+</ul></li>
+<li class="treeview"><a title="研发工具" href="javascript:" data-href="blank" class="addTabPage"><i class="fa fa-fw fa fa-code"></i> <span>研发工具</span>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">
+<li class="treeview"><a title="代码生成工具" href="javascript:" data-href="a/gen/genTable/list" class="addTabPage"><i class="fa fa-fw fa fa-code"></i> <span>代码生成工具</span></a></li>
+<li class="treeview"><a title="代码生成实例" href="javascript:" data-href="blank" class="addTabPage"><i class="fa fa-fw icon-social-dropbox"></i> <span>代码生成实例</span>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">
+<li class="treeview"><a title="单表/主子表" href="javascript:" data-href="a/test/testData/list" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>单表/主子表</span></a></li>
+<li class="treeview"><a title="树表/树结构表" href="javascript:" data-href="a/test/testTree/list" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>树表/树结构表</span></a></li>
+</ul></li>
+<li class="treeview"><a title="数据表格实例" href="javascript:" data-href="blank" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>数据表格实例</span>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">
+<li class="treeview"><a title="多表头分组小计合计" href="javascript:" data-href="a/demo/dataGrid/groupGrid" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>多表头分组小计合计</span></a></li>
+<li class="treeview"><a title="编辑表格多行编辑" href="javascript:" data-href="a/demo/dataGrid/editGrid" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>编辑表格多行编辑</span></a></li>
+</ul></li>
+<li class="treeview"><a title="表单组件实例" href="javascript:" data-href="blank" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>表单组件实例</span>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">
+<li class="treeview"><a title="组件应用实例" href="javascript:" data-href="a/demo/form/editForm" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>组件应用实例</span></a></li>
+<li class="treeview"><a title="栅格布局实例" href="javascript:" data-href="a/demo/form/layoutForm" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>栅格布局实例</span></a></li>
+<li class="treeview"><a title="表格表单实例" href="javascript:" data-href="a/demo/form/tableForm" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>表格表单实例</span></a></li>
+</ul></li>
+<li class="treeview"><a title="前端界面实例" href="javascript:" data-href="blank" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>前端界面实例</span>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">
+<li class="treeview"><a title="图标样式查找" href="javascript:" data-href="tags/iconselect" class="addTabPage"><i class="fa fa-fw fa-circle-o"></i> <span>图标样式查找</span></a></li>
+</ul></li>
+</ul></li>
+<li class="treeview"><a title="JeeSite社区" href="javascript:" data-href="blank" class="addTabPage"><i class="fa fa-fw fa fa-code"></i> <span>JeeSite社区</span>
+	<span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu">
+<li class="treeview"><a title="官方网站" href="http://jeesite.com" target="_blank"><i class="fa fa-fw fa-circle-o"></i> <span>官方网站</span></a></li>
+<li class="treeview"><a title="问题反馈" href="https://gitee.com/thinkgem/jeesite4/issues" target="_blank"><i class="fa fa-fw fa-circle-o"></i> <span>问题反馈</span></a></li>
+<li class="treeview"><a title="作者博客" href="https://my.oschina.net/thinkgem" target="_blank"><i class="fa fa-fw fa-circle-o"></i> <span>作者博客</span></a></li>
+<li class="treeview"><a title="开源社区" href="http://jeesite.net" target="_blank"><i class="fa fa-fw fa-circle-o"></i> <span>开源社区</span></a></li>
+</ul></li>
+</ul></li>
+	</ul>
+</section></aside>
+<div class="content-wrapper">
+	<div id="tabpanel"></div>
+</div>
+</div>
+
+<a id="scroll-up" href="#" class="btn btn-sm"><i class="fa fa-angle-double-up"></i></a>
+<script src="../bootstrap/js/bootstrap.min.js"></script>
+<script src="../select2/4.0/select2.js?V4.1-12222149"></script>
+<script src="../select2/4.0/i18n/zh_CN.js?V4.1-12222149"></script>
+<script src="../layer/3.1/layer.js?V4.1-12222149"></script>
+<script src="../my97/WdatePicker.js?V4.1-12222149"></script>
+<script src="../wdScrollTab/js/TabPanel.js?V4.1-12222149"></script>
+<script src="../wdScrollTab/js/TabPanel.extend.js?V4.1-12222149"></script>
+<script src="../common/jeesite.js?V4.1-12222149"></script>
+<script src="../common/i18n/jeesite_zh_CN.js?V4.1-12222149"></script>
+<script src="../common/common.js?V4.1-12222149"></script>
+<div class="hide" id="desktopTabPage" data-title="仪表盘"
+	data-url="xxxxxxxx"></div>
+<div class="hide" id="modifyPasswordTip" data-message=""></div>
+<script src="../jquery-toastr/2.0/toastr.min.js?V4.1-12222149"></script>
+<script src="../jquery-plugins/jquery.slimscroll.js"></script>
+<script src="../modules/sys/sysIndex.js?V4.1-12222149"></script>
